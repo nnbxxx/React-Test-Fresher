@@ -1,0 +1,39 @@
+.site-layout-content {
+  min-height: 280px;
+  padding: 24px;
+}
+.logo {
+  float: left;
+  width: 5%;
+  height: 31px;
+  margin: 16px 24px 16px 0;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  svg {
+    font-size: 20px;
+    animation: loading 2s linear infinite;
+    @keyframes loading {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}
+.ant-row-rtl .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+.layout {
+  .search-bar {
+    width: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}

@@ -1,0 +1,19 @@
+header {
+  .account {
+    height: 30px;
+    float: right;
+    display: inline-block;
+    position: relative;
+    left: 0%;
+    translate(-50%, 30%)
+  }
+}
+@media screen and (max-width: 767.98px) {
+  header {
+    .account {
+      height: 30px;
+      left: 16%;
+      // transform: translate(-50%, 50);
+    }
+  }
+}

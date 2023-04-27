@@ -1,0 +1,17 @@
+.logo-admin {
+}
+header {
+  .account {
+    height: 30px;
+    float: right;
+    position: relative;
+    left: 0%;
+    transform: translate(-50%, 50%);
+  }
+}
+@media screen and (max-width: 767.98px) {
+  header {
+    .account {
+    }
+  }
+}

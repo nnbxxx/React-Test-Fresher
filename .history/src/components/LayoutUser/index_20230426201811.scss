@@ -1,0 +1,72 @@
+.site-layout-content {
+  min-height: 280px;
+  padding: 24px;
+}
+.logo {
+  float: left;
+  height: 30px;
+  min-width: 30px;
+  margin: 16px 24px 16px 0;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  cursor: pointer;
+  border-radius: 50rem;
+  svg {
+    font-size: 20px;
+    animation: loading 2s linear infinite;
+    @keyframes loading {
+      0% {
+        transform: rotate(0);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
+    }
+  }
+}
+.ant-row-rtl .logo {
+  float: right;
+  margin: 16px 0 16px 24px;
+}
+.layout {
+  .navbar-search {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    gap: 10px;
+    margin-top: 15px;
+    .search-bar {
+      position: relative;
+      min-width: 60%;
+    }
+    .menu-item {
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .account {
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: red;
+      float: right;
+    }
+    .cart-icon {
+      margin-left: 200px;
+      height: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      svg {
+        color: #fff;
+        font-size: 30px;
+        cursor: pointer;
+      }
+    }
+  }
+}

@@ -1,0 +1,27 @@
+.logo-admin {
+  svg {
+    font-size: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    border: 1px solid #eee;
+    padding: 5px;
+    border-radius: 100rem;
+  }
+}
+header {
+  .account {
+    height: 30px;
+    float: right;
+    position: relative;
+    left: 0%;
+    transform: translate(-50%, 50%);
+  }
+}
+@media screen and (max-width: 767.98px) {
+  header {
+    .account {
+    }
+  }
+}
