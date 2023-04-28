@@ -1,14 +1,6 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Outlet, useNavigate } from "react-router-dom";
-import {
-  Breadcrumb,
-  Layout,
-  Menu,
-  theme,
-  Button,
-  Dropdown,
-  message,
-} from "antd";
+import { useSelector } from "react-redux";
+import { Outlet } from "react-router-dom";
+import { Breadcrumb, Layout, Menu, theme, Button, Dropdown } from "antd";
 import {
   FileOutlined,
   PieChartOutlined,
@@ -47,19 +39,13 @@ const itemsSideBar = [
   getItem("Manage Orders", "9", <TbReportMoney />, []),
 ];
 const LayoutAdmin = () => {
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
   const isAdminRoute = window.location.pathname.startsWith("/admin");
   const user = useSelector((state) => state.account.user);
   const isPermmited = isAdminRoute && user.role === "ADMIN";
   const [collapsed, setCollapsed] = useState(false);
   const handleMenuClick = (e) => {
-    // message.info("Click on menu item.");
-    // console.log("click", e);
-    // menu quan ly tai khoan header
-    if (e.key === "2") {
-      handleLogout();
-    }
+    message.info("Click on menu item.");
+    console.log("click", e);
   };
   const items = [
     {

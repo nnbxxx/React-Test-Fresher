@@ -85,7 +85,7 @@ export default function App() {
   return (
     <>
       {" "}
-      {!isLoading ||
+      {isAuthenticated ||
       window.location.pathname === "/login" ||
       window.location.pathname === "/register" ||
       window.location.pathname === "/" ? (

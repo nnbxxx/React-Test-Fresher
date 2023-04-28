@@ -22,5 +22,5 @@ export const callFetchAccount = () => {
   return axios.get("/api/v1/auth/account");
 };
 export const callLogoutAccount = () => {
-  return axios.post("/api/v1/auth/logout");
+  return axios.get("/api/v1/auth/logout");
 };

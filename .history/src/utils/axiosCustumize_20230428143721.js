@@ -1,10 +1,22 @@
 import axios from "axios";
-const baseURL = import.meta.env.VITE_BACK_END_URL;
+
+const baseUrl = import.meta.env.VITE_BACKEND_URL;
+
 const instance = axios.create({
-  baseURL: baseURL,
-  timeout: 1000,
+  baseURL: baseUrl,
   withCredentials: true,
 });
+
+instance.defaults.headers.common = {
+  Authorization: `Bearer ${localStorage.getItem("access_token")}`,
+};
+
+const handleRefreshToken = async () => {
+  const res = await instance.get("/api/v1/auth/refresh");
+  if (res && res.data) return res.data.access_token;
+  else null;
+};
+
 // Add a request interceptor
 instance.interceptors.request.use(
   function (config) {
@@ -16,18 +28,9 @@ instance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
-instance.defaults.headers.common = {
-  Authorization: `bearer ${localStorage.getItem("access_token")}`,
-};
 
-const handleRefreshToken = async () => {
-  const res = await instance.get("/api/v1/auth/refresh");
-  if (res && res.data) {
-    return res.data.access_token;
-  }
-  return null;
-};
 const NO_RETRY_HEADER = "x-no-retry";
+
 // Add a response interceptor
 instance.interceptors.response.use(
   function (response) {
@@ -47,20 +50,23 @@ instance.interceptors.response.use(
       const access_token = await handleRefreshToken();
       error.config.headers[NO_RETRY_HEADER] = "true";
       if (access_token) {
-        error.config.headers["Authorization"] = `bearer ${access_token}`;
+        error.config.headers["Authorization"] = `Bearer ${access_token}`;
         localStorage.setItem("access_token", access_token);
         return instance.request(error.config);
       }
     }
+
     if (
       error.config &&
       error.response &&
       +error.response.status === 400 &&
       error.config.url === "/api/v1/auth/refresh"
     ) {
-      window.location.href = "/login";
+      //window.location.href = '/login';
     }
+
     return error?.response?.data ?? Promise.reject(error);
   }
 );
+
 export default instance;

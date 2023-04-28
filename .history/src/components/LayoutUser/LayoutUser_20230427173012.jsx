@@ -42,12 +42,14 @@ const LayoutUser = () => {
   ];
   const handleLogout = async () => {
     const res = await callLogoutAccount();
-    // console.log("🚀 ~ file: LayoutUser.jsx:43 ~ handleLogout ~ res:", res);
+    console.log("🚀 ~ file: LayoutUser.jsx:43 ~ handleLogout ~ res:", res);
     if (res && res.data) {
-      message.success("Logout Successful");
+      message.success("Login Successful");
       navigate("/");
       dispatch(doLogoutAction());
     }
+    //    message.success("Login Successful");
+    //  navigate("/");
   };
   const handleMenuClick = (e) => {
     // console.log("click", e);
@@ -144,14 +146,12 @@ const LayoutUser = () => {
                 </Dropdown.Button>
               </div>
             ) : (
-              <div
-                className='account'
-                style={{ transform: "translate(-50%, -50%)" }}
-              >
+              <div className='account'>
                 <Button
                   onClick={() => {
                     navigate("/login");
                   }}
+                  style={{ transform: "translate(-50%, 0%)" }}
                 >
                   Login
                 </Button>
@@ -191,7 +191,7 @@ const LayoutUser = () => {
           Ant Design ©2023 Created by Ant UED
         </Footer>
       </Layout>
-      {isAuthenticated === true && (
+      {isAuthenticated && (
         <Drawer
           title='Menu Account'
           placement='left'
@@ -199,9 +199,7 @@ const LayoutUser = () => {
           open={open}
         >
           <p style={{ cursor: "pointer" }}>Manage Account</p>
-          <p style={{ cursor: "pointer" }} onClick={handleLogout}>
-            Log Out
-          </p>
+          <p style={{ cursor: "pointer" }}>Log Out</p>
         </Drawer>
       )}
     </>

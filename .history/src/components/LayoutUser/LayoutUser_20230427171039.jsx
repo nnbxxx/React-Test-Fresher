@@ -20,14 +20,12 @@ import {
   HomeOutlined,
 } from "@ant-design/icons";
 import "./index.scss";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { FaBars } from "react-icons/fa";
 import { callLogoutAccount } from "../../service/api";
-import { doLogoutAction } from "../../redux/account/accountSlice";
 
 const LayoutUser = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.account.isAuthenticated);
   const user = useSelector((state) => state.account.user);
   const {
@@ -42,12 +40,10 @@ const LayoutUser = () => {
   ];
   const handleLogout = async () => {
     const res = await callLogoutAccount();
-    // console.log("🚀 ~ file: LayoutUser.jsx:43 ~ handleLogout ~ res:", res);
-    if (res && res.data) {
-      message.success("Logout Successful");
-      navigate("/");
-      dispatch(doLogoutAction());
-    }
+    console.log("🚀 ~ file: LayoutUser.jsx:43 ~ handleLogout ~ res:", res);
+
+    message.success("Login Successful");
+    navigate("/");
   };
   const handleMenuClick = (e) => {
     // console.log("click", e);
@@ -144,10 +140,7 @@ const LayoutUser = () => {
                 </Dropdown.Button>
               </div>
             ) : (
-              <div
-                className='account'
-                style={{ transform: "translate(-50%, -50%)" }}
-              >
+              <div className='account'>
                 <Button
                   onClick={() => {
                     navigate("/login");
@@ -191,7 +184,7 @@ const LayoutUser = () => {
           Ant Design ©2023 Created by Ant UED
         </Footer>
       </Layout>
-      {isAuthenticated === true && (
+      {isAuthenticated && (
         <Drawer
           title='Menu Account'
           placement='left'
@@ -199,9 +192,7 @@ const LayoutUser = () => {
           open={open}
         >
           <p style={{ cursor: "pointer" }}>Manage Account</p>
-          <p style={{ cursor: "pointer" }} onClick={handleLogout}>
-            Log Out
-          </p>
+          <p style={{ cursor: "pointer" }}>Log Out</p>
         </Drawer>
       )}
     </>

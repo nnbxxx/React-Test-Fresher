@@ -48,6 +48,8 @@ const LayoutUser = () => {
       navigate("/");
       dispatch(doLogoutAction());
     }
+    //    message.success("Login Successful");
+    //  navigate("/");
   };
   const handleMenuClick = (e) => {
     // console.log("click", e);

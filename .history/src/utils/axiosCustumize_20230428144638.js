@@ -1,4 +1,5 @@
 import axios from "axios";
+import { Navigate, useNavigate } from "react-router-dom";
 const baseURL = import.meta.env.VITE_BACK_END_URL;
 const instance = axios.create({
   baseURL: baseURL,
@@ -47,7 +48,7 @@ instance.interceptors.response.use(
       const access_token = await handleRefreshToken();
       error.config.headers[NO_RETRY_HEADER] = "true";
       if (access_token) {
-        error.config.headers["Authorization"] = `bearer ${access_token}`;
+        error.config.headers["Authorization"] = `Bearer ${access_token}`;
         localStorage.setItem("access_token", access_token);
         return instance.request(error.config);
       }
@@ -58,7 +59,10 @@ instance.interceptors.response.use(
       +error.response.status === 400 &&
       error.config.url === "/api/v1/auth/refresh"
     ) {
+      const navigate = useNavigate();
+      navigate("/login");
       window.location.href = "/login";
+      console.log(400, 400, 400);
     }
     return error?.response?.data ?? Promise.reject(error);
   }

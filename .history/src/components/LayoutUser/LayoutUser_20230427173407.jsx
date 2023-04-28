@@ -42,12 +42,14 @@ const LayoutUser = () => {
   ];
   const handleLogout = async () => {
     const res = await callLogoutAccount();
-    // console.log("🚀 ~ file: LayoutUser.jsx:43 ~ handleLogout ~ res:", res);
+    console.log("🚀 ~ file: LayoutUser.jsx:43 ~ handleLogout ~ res:", res);
     if (res && res.data) {
-      message.success("Logout Successful");
+      message.success("Login Successful");
       navigate("/");
       dispatch(doLogoutAction());
     }
+    //    message.success("Login Successful");
+    //  navigate("/");
   };
   const handleMenuClick = (e) => {
     // console.log("click", e);

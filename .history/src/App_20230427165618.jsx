@@ -71,6 +71,7 @@ export default function App() {
   const isLoading = useSelector((state) => state.account.isLoading);
   const getAccount = async () => {
     if (
+      isLoading ||
       window.location.pathname === "/login" ||
       window.location.pathname === "/register"
     ) {
@@ -85,7 +86,7 @@ export default function App() {
   return (
     <>
       {" "}
-      {!isLoading ||
+      {isAuthenticated ||
       window.location.pathname === "/login" ||
       window.location.pathname === "/register" ||
       window.location.pathname === "/" ? (
