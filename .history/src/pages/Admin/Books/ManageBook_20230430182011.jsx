@@ -1,0 +1,15 @@
+import { Col, Row, Space } from "antd";
+import React from "react";
+export const ManageBook = () => {
+  return (
+    <Space direction='vertical'>
+      <Space>
+        Search bar
+        <Row>
+          <Col span={8}></Col>
+        </Row>
+      </Space>
+      <Space>Table Book</Space>
+    </Space>
+  );
+};
