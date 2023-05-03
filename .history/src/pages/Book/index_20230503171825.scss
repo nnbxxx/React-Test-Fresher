@@ -1,0 +1,84 @@
+.container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 20px;
+  .left-side {
+    border: 1px solid red;
+    width: 40%;
+  }
+  .right-side {
+    border: 1px solid #2cccff;
+    width: 60%;
+    color: #000;
+    display: flex;
+    flex-direction: column;
+    font-size: 14px;
+    line-height: 1.5;
+    padding: 20px 35px 0px 20px;
+    gap: 10px;
+    .brand {
+      display: flex;
+      font-size: 14px;
+      line-height: 16.1px;
+      margin: 8px 0px 0px;
+      gap: 10px;
+    }
+    .title {
+      color: #242424;
+      font-family: Roboto;
+      font-size: 24px;
+      font-weight: 300;
+      line-height: 32px;
+      margin: 0px 0px 4px;
+    }
+    .below-title {
+      align-items: center;
+      display: flex;
+      font-size: 14px;
+      line-height: 16.1px;
+      margin: 4px 0px 0px;
+      gap: 10px;
+      .sold-book {
+        color: #787878;
+        font-size: 15px;
+        line-height: 24px;
+      }
+    }
+    .price {
+      background-color: #fafafa;
+      border-radius: 4px;
+      display: flex;
+      flex-direction: column;
+      font-size: 14px;
+      line-height: 16.1px;
+      padding: 0px 16px 12px;
+      span {
+        color: #ff424e;
+        font-size: 32px;
+        font-weight: 500;
+        line-height: 1.5;
+        margin: 0px 8px 0px 0px;
+      }
+    }
+    .ship {
+      align-items: flex-start;
+      color: #222222;
+      display: flex;
+      font-size: 14px;
+      line-height: 16.8px;
+      margin: -4px 0px 25px -4px;
+      padding: 4px;
+      gap: 10px;
+    }
+    .quantity {
+      align-items: flex-start;
+      color: #222222;
+      display: flex;
+      font-size: 14px;
+      line-height: 16.8px;
+      margin: -4px 0px 25px -4px;
+      padding: 4px;
+    }
+  }
+}

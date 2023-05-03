@@ -146,7 +146,7 @@ export const ManageBook = () => {
     const res = await callGetBooksWithPaginate(query);
     if (res && res.data) {
       setlistBook(res.data.result);
-      setToltalPage(res.data.meta.total);
+      setToltalPage(res.data.meta.pages);
       setTimeout(() => {
         setIsLoading(false);
       }, 100);

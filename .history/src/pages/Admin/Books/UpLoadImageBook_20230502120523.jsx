@@ -17,14 +17,11 @@ const UpLoadImageBook = (props) => {
   const [previewTitle, setPreviewTitle] = useState("");
   const handleChange = ({ fileList: newFileList }) => setFileList(newFileList);
   const [fileList, setFileList] = useState([]);
-  const { name, uploadConfig } = props;
-
+  const { name, uploadConfig, setDataProps } = props;
   const [data, setData] = useState([]);
-
   const handleUploadFileSlider = async ({ file, onSuccess, onError }) => {
     const res = await callUploadBookImg(file);
     if (res && res.data) {
-      //copy previous state => upload multiple images
       setData((dataSlider) => [
         ...dataSlider,
         {
@@ -33,10 +30,6 @@ const UpLoadImageBook = (props) => {
         },
       ]);
       onSuccess("ok");
-      console.log(
-        "🚀 ~ file: UpLoadImageBook.jsx:23 ~ UpLoadImageBook ~ data:",
-        data
-      );
     } else {
       onError("Đã có lỗi khi upload file");
     }
@@ -50,14 +43,18 @@ const UpLoadImageBook = (props) => {
           uid: file.uid,
         },
       ]);
-      console.log(
-        "🚀 ~ file: UpLoadImageBook.jsx:23 ~ UpLoadImageBook ~ data:",
-        data
-      );
-
       onSuccess("ok");
     } else {
       onError("Đã có lỗi khi upload file");
+    }
+  };
+  const handleRemoveFile = (file) => {
+    if (name === "thumbnail") {
+      setDataThumbnail([]);
+    }
+    if (name === "slider") {
+      const newSlider = dataSlider.filter((x) => x.uid !== file.uid);
+      setDataSlider(newSlider);
     }
   };
   const handleCancel = () => setPreviewOpen(false);
@@ -94,6 +91,7 @@ const UpLoadImageBook = (props) => {
     }
     return isJpgOrPng && isLt2M;
   };
+
   return (
     <>
       <Upload
@@ -109,7 +107,7 @@ const UpLoadImageBook = (props) => {
         onPreview={handlePreview}
         onChange={handleChange}
         beforeUpload={beforeUpload}
-        onRemove={null}
+        onRemove={handleRemoveFile}
       >
         {uploadButton}
       </Upload>
