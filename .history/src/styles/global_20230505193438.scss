@@ -1,0 +1,9 @@
+.popover-cart {
+  width: 400px;
+  .ant-popover-content {
+    display: inline;
+    position: relative;
+    left: 70%;
+    transform: translateX(-50%);
+  }
+}

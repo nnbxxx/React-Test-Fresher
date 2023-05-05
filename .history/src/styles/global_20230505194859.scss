@@ -1,0 +1,22 @@
+.popover-cart {
+  width: 400px;
+  .ant-popover-content {
+    display: inline;
+    position: relative;
+    right: -20%;
+    .ant-popover-inner-content {
+      .book {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        .book-image {
+          flex-shrink: 1;
+        }
+        .book-name {
+        }
+        .book-price {
+        }
+      }
+    }
+  }
+}

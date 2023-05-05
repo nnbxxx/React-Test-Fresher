@@ -1,0 +1,42 @@
+.popover-cart {
+  width: 450px;
+  .ant-popover-content {
+    display: inline;
+    position: relative;
+    right: -20%;
+
+    .ant-popover-inner-content {
+      .list-books {
+        .book {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          padding: 5px;
+          gap: 10px;
+          &:hover {
+            background-color: #eee;
+          }
+          .book-image {
+            min-width: 60px;
+            flex-shrink: 0;
+          }
+          .book-name {
+            white-space: nowrap;
+            width: 250px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+          }
+          .book-price {
+          }
+        }
+      }
+      .button-see-cart {
+        margin: 10px 0;
+        display: inline-block;
+        position: relative;
+        right: -80%;
+        // transform: translateX(-50%);
+      }
+    }
+  }
+}

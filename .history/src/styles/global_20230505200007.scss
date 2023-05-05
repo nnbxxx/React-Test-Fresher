@@ -1,0 +1,33 @@
+.popover-cart {
+  width: 400px;
+  .ant-popover-content {
+    display: inline;
+    position: relative;
+    right: -20%;
+
+    .ant-popover-inner-content {
+      .book {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        margin-bottom: 10px;
+        &:hover {
+          background-color: #eee;
+        }
+        .book-image {
+          min-width: 60px;
+          flex-shrink: 0;
+        }
+        .book-name {
+          white-space: nowrap;
+          width: 250px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        .book-price {
+        }
+      }
+    }
+  }
+}

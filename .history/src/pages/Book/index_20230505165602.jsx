@@ -138,11 +138,9 @@ const BookPage = (props) => {
   const handleAddToCart = (quanlity, dataBook) => {
     dispatch(
       doAddBookAction({ quanlity, detail: dataBook, _id: dataBook._id })
-      // doAddBookAction(null)
     );
   };
   const carts = useSelector((state) => state.order.carts);
-  console.log("🚀 ~ file: index.jsx:145 ~ BookPage ~ carts:", carts);
   return (
     <>
       <Layout className='layout'>
