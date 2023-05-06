@@ -2,21 +2,12 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect, useRef, useState } from "react";
 import {
   Layout,
-  Menu,
   theme,
   Input,
-  Dropdown,
-  message,
   Badge,
   Button,
-  Drawer,
-  Avatar,
-  Popover,
   Image,
   Empty,
-  Row,
-  Col,
-  Card,
   Divider,
   InputNumber,
   Steps,
@@ -24,18 +15,9 @@ import {
   Result,
 } from "antd";
 const { Header, Content, Footer } = Layout;
-import {
-  CheckCircleOutlined,
-  DeleteOutlined,
-  ShoppingCartOutlined,
-} from "@ant-design/icons";
-import { FaBars, FaReact } from "react-icons/fa";
-import { FcManager } from "react-icons/fc";
-import { FiLogOut } from "react-icons/fi";
-import { MdOutlineManageAccounts } from "react-icons/md";
+import { CheckCircleOutlined, DeleteOutlined } from "@ant-design/icons";
 import { useSelector, useDispatch } from "react-redux";
-import { callLogoutAccount, callPostCreateOrder } from "../../service/api";
-import { doLogoutAction } from "../../redux/account/accountSlice";
+import { callPostCreateOrder } from "../../service/api";
 import "./index.scss";
 import {
   doAddBookAction,
@@ -44,6 +26,7 @@ import {
   doUpdateBookAction,
 } from "../../redux/order/orderSlice";
 import TextArea from "antd/es/input/TextArea";
+import HeaderUser from "../../components/Header/HeaderUser";
 const baseURL = import.meta.env.VITE_BACK_END_URL;
 const nonAccentVietnamese = (str) => {
   str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
@@ -83,7 +66,6 @@ const convertSlug = (str) => {
     .replace(/-+/g, "-"); // collapse dashes
   return str;
 };
-
 const OrderPage = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -92,108 +74,11 @@ const OrderPage = (props) => {
   const {
     token: { colorBgContainer },
   } = theme.useToken();
-  const handleLogout = async () => {
-    const res = await callLogoutAccount();
-    if (res && res.data) {
-      message.success("Logout Successful");
-      navigate("/");
-      dispatch(doLogoutAction());
-    }
-  };
-  const handleMenuClick = (e) => {
-    // console.log("click", e);
-    if (e.key === "2") {
-      handleLogout();
-    }
-    if (e.key === "3") {
-      navigate("/admin");
-    }
-  };
-  const items = [
-    {
-      label: <span> Manage Account</span>,
-      key: "1",
-      icon: <MdOutlineManageAccounts />,
-    },
-    {
-      label: "Log Out",
-      key: "2",
-      icon: <FiLogOut />,
-      danger: true,
-    },
-  ];
-  if (user.role !== "USER") {
-    items.unshift({
-      label: "Admin Page",
-      key: "3",
-      icon: <FcManager />,
-    });
-  }
-  const menuProps = {
-    items,
-    onClick: handleMenuClick,
-  };
-  const [open, setOpen] = useState(false);
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
-  };
-  const urlAvatar = `${import.meta.env.VITE_BACK_END_URL}/images/avatar/${
-    user.avatar
-  }`;
   let carts = useSelector((state) => state.order.carts);
   const handleDirectDetailBook = (book) => {
     const slug = convertSlug(book.mainText);
     navigate(`/book/${slug}?id=${book._id}`);
   };
-  const contentPopover = (
-    <>
-      <div className='list-books'>
-        {carts &&
-          carts?.length > 0 &&
-          carts?.map((item) => {
-            return (
-              <>
-                <div
-                  className='book'
-                  key={item._id}
-                  style={{ cursor: "pointer" }}
-                  onClick={() => {
-                    handleDirectDetailBook(item.detail);
-                  }}
-                >
-                  <Image
-                    preview={false}
-                    className='book-image'
-                    src={`${baseURL}/images/book/${item.detail.thumbnail}`}
-                    width={60}
-                    height={60}
-                  ></Image>
-                  <div className='book-name'>{item.detail.mainText}</div>
-                  <div className='book-price'>
-                    {new Intl.NumberFormat("vi-VN", {
-                      style: "currency",
-                      currency: "VND",
-                    }).format(item.detail.price)}
-                  </div>
-                </div>
-              </>
-            );
-          })}
-      </div>
-      <Button
-        type='primary'
-        className='button-see-cart'
-        onClick={() => {
-          return navigate("/order");
-        }}
-      >
-        See Cart
-      </Button>
-    </>
-  );
   const [total, setTotal] = useState(0);
   const handleOnChangeQuanlity = (value, book) => {
     if (!isNaN(value) || value < 1) {
@@ -231,7 +116,7 @@ const OrderPage = (props) => {
     let tmpListBook = [];
     carts.forEach((item) => {
       tmpListBook.push({
-        bookname: item.detail.mainText,
+        bookName: item.detail.mainText,
         quantity: item.quanlity,
         _id: item._id,
       });
@@ -251,76 +136,7 @@ const OrderPage = (props) => {
   return (
     <>
       <Layout className='layout'>
-        <Header>
-          <div
-            className='logo'
-            onClick={() => {
-              navigate("/");
-            }}
-          >
-            <FaReact />
-            Webdevstudios
-          </div>
-          <div className='logo-mobile' onClick={showDrawer}>
-            <FaBars />
-          </div>
-          <div className='navbar-search'>
-            <Input.Search
-              placeholder='What are you looking for today?'
-              // onSearch={}
-              enterButton
-              className='search-bar'
-            />
-            <div className='menu-item'>
-              <Menu theme='dark' items={[]}></Menu>
-            </div>
-            {isAuthenticated === true ? (
-              <Popover
-                content={contentPopover}
-                title='Newly added product'
-                rootClassName='popover-cart'
-                placement='bottomRight'
-              >
-                <div className='cart-icon'>
-                  <Badge
-                    count={carts?.length > 0 ? carts?.length : 0}
-                    offset={[-2, 5]}
-                    showZero
-                  >
-                    <ShoppingCartOutlined />
-                  </Badge>
-                </div>
-              </Popover>
-            ) : null}
-
-            {isAuthenticated === true ? (
-              <div className='account'>
-                <Dropdown.Button
-                  menu={menuProps}
-                  size='middle'
-                  placement='bottom'
-                  icon={<Avatar shape='circle' src={urlAvatar}></Avatar>}
-                >
-                  {user.fullName}
-                </Dropdown.Button>
-              </div>
-            ) : (
-              <div
-                className='account'
-                style={{ transform: "translate(-50%, -50%)" }}
-              >
-                <Button
-                  onClick={() => {
-                    navigate("/login");
-                  }}
-                >
-                  Login
-                </Button>
-              </div>
-            )}
-          </div>
-        </Header>
-
+        <HeaderUser></HeaderUser>
         <Content
           style={{
             padding: "0 50px",
@@ -627,7 +443,16 @@ const OrderPage = (props) => {
                   <Result
                     icon={<CheckCircleOutlined />}
                     title='Your order has been placed successfully.'
-                    extra={<Button type='primary'>View History</Button>}
+                    extra={
+                      <Button
+                        type='primary'
+                        onClick={() => {
+                          navigate("/history");
+                        }}
+                      >
+                        View History
+                      </Button>
+                    }
                   />
                 )}
               </>
@@ -679,19 +504,6 @@ const OrderPage = (props) => {
           Ant Design ©2023 Created by Ant UED
         </Footer>
       </Layout>
-      {isAuthenticated === true && (
-        <Drawer
-          title='Menu Account'
-          placement='left'
-          onClose={onClose}
-          open={open}
-        >
-          <p style={{ cursor: "pointer" }}>Manage Account</p>
-          <p style={{ cursor: "pointer" }} onClick={handleLogout}>
-            Log Out
-          </p>
-        </Drawer>
-      )}
     </>
   );
 };

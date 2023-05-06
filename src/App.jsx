@@ -21,6 +21,7 @@ import { ManageBook } from "./pages/Admin/Books/ManageBook";
 import "react-image-gallery/styles/scss/image-gallery.scss";
 import "./styles/global.scss";
 import OrderPage from "./pages/Order";
+import HistoryPage from "./pages/History";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
   {
     path: "/order",
     element: <OrderPage />,
+  },
+  {
+    path: "/history",
+    element: <HistoryPage />,
   },
   {
     path: "/admin",
