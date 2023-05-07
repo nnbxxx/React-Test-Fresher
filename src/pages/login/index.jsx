@@ -114,7 +114,7 @@ const LoginPage = () => {
               style={{ width: "100%" }}
               loading={isloading}
             >
-              Sign Up
+              Sign In
             </Button>
           </Form.Item>
           <Form.Item
