@@ -46,7 +46,14 @@ const HistoryPage = (props) => {
       render: (text, record, index) => {
         return (
           <>
-            <ReactJson src={record.detail} name={`Invoice details `} />
+            <ReactJson
+              src={record.detail}
+              name={`Invoice details `}
+              collapsed={true}
+              enableClipboard={false}
+              displayDataTypes={false}
+              displayObjectSize={false}
+            />
           </>
         );
       },

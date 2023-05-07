@@ -30,6 +30,7 @@ import { doLogoutAction } from "../../redux/account/accountSlice";
 import { AiOutlineHome } from "react-icons/ai";
 import { FiLogOut } from "react-icons/fi";
 import { MdOutlineManageAccounts } from "react-icons/md";
+import { useEffect } from "react";
 
 const { Header, Content, Footer, Sider } = Layout;
 function getItem(label, key, icon, children) {
@@ -49,10 +50,7 @@ const itemsSideBar = [
     getItem("CRUD", "3", <FaBook />),
     // getItem("Team 2", "8"),
   ]),
-  getItem("Manage Orders", "9", <TbReportMoney />, [
-    getItem("Team 2", "8"),
-    // getItem("Team 2", "8"),
-  ]),
+  getItem("Manage Orders", "4", <TbReportMoney />),
 ];
 const LayoutAdmin = () => {
   const navigate = useNavigate();
@@ -70,11 +68,21 @@ const LayoutAdmin = () => {
     }
   };
   const handleSideBarClick = (e) => {
+    if (e.key === "1") {
+      navigate("/admin");
+      setActiveMenu("1");
+    }
     if (e.key === "2") {
       navigate("/admin/user");
+      setActiveMenu("sub1");
     }
     if (e.key === "3") {
       navigate("/admin/book");
+      setActiveMenu("sub2");
+    }
+    if (e.key === "4") {
+      navigate("/admin/order");
+      setActiveMenu("4");
     }
   };
 
@@ -89,19 +97,6 @@ const LayoutAdmin = () => {
       key: "2",
       icon: <FiLogOut />,
     },
-    // {
-    //   label: "3rd menu item",
-    //   key: "3",
-    //   icon: <UserOutlined />,
-    //   danger: true,
-    // },
-    // {
-    //   label: "4rd menu item",
-    //   key: "4",
-    //   icon: <UserOutlined />,
-    //   danger: true,
-    //   disabled: true,
-    // },
   ];
   if (user.role) {
     items.unshift({
@@ -125,6 +120,13 @@ const LayoutAdmin = () => {
       dispatch(doLogoutAction());
     }
   };
+  const [activeMenu, setActiveMenu] = useState("1");
+  useEffect(() => {
+    if (window.location.pathname.includes("/admin")) setActiveMenu("1");
+    if (window.location.pathname.includes("/admin/user")) setActiveMenu("sub1");
+    if (window.location.pathname.includes("/admin/book")) setActiveMenu("sub2");
+    if (window.location.pathname.includes("/admin/order")) setActiveMenu("4");
+  }, []);
   return (
     <>
       {isPermmited ? (
@@ -147,7 +149,7 @@ const LayoutAdmin = () => {
             <Menu
               theme='dark'
               mode='inline'
-              defaultSelectedKeys={["1"]}
+              selectedKeys={[activeMenu]}
               items={itemsSideBar}
               onClick={handleSideBarClick}
             />

@@ -69,17 +69,17 @@ const Home = (props) => {
       children: <></>,
     },
   ];
-  const [filter, setFilter] = useOutletContext();
+  const [searchBook, filter] = useOutletContext();
   const [listBook, setlistBook] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [pageSize, setPageSize] = useState(5);
   const [toltalPage, setToltalPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true);
   const [sort, setSort] = useState("&sort=-sold");
-  const [search, setSearch] = useState("");
+
   const fetchListBook = async () => {
     let query = `current=${currentPage}&pageSize=${pageSize}`;
-    if (search) query += search;
+    if (searchBook) query += searchBook;
     if (sort) query += sort;
     if (filter) query += filter;
     setIsLoading(true);
@@ -99,7 +99,7 @@ const Home = (props) => {
   };
   useEffect(() => {
     fetchListBook();
-  }, [currentPage, pageSize, search, sort, filter]);
+  }, [currentPage, pageSize, searchBook, sort, filter]);
   return (
     <Col>
       <Row>

@@ -15,10 +15,7 @@ import {
   EditTwoTone,
   DeleteTwoTone,
   SearchOutlined,
-  ClearOutlined,
   ExportOutlined,
-  UserAddOutlined,
-  ImportOutlined,
   PlusOutlined,
 } from "@ant-design/icons";
 import { AiOutlineReload } from "react-icons/ai";
@@ -179,10 +176,10 @@ export const ManageBook = () => {
     setSort("&sort=-updatedAt");
     fetchListBook();
   };
+  useEffect(() => {
+    fetchListBook();
+  }, [currentPage, pageSize, search, sort]);
   const renderHeader = () => {
-    useEffect(() => {
-      fetchListBook();
-    }, [currentPage, pageSize, search, sort]);
     return (
       <div
         style={{

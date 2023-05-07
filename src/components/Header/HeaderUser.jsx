@@ -12,6 +12,7 @@ import {
   Avatar,
   Popover,
   Image,
+  Form,
 } from "antd";
 const { Header } = Layout;
 import { HistoryOutlined, ShoppingCartOutlined } from "@ant-design/icons";
@@ -22,7 +23,7 @@ import { MdOutlineManageAccounts } from "react-icons/md";
 import { useSelector, useDispatch } from "react-redux";
 import { callLogoutAccount } from "../../service/api";
 import { doLogoutAction } from "../../redux/account/accountSlice";
-import { doPlaceOrderAction } from "../../redux/order/orderSlice";
+import { ModalManageAccount } from "./ModalManageAccount";
 const baseURL = import.meta.env.VITE_BACK_END_URL;
 const nonAccentVietnamese = (str) => {
   str = str.replace(/A|Á|À|Ã|Ạ|Â|Ấ|Ầ|Ẫ|Ậ|Ă|Ắ|Ằ|Ẵ|Ặ/g, "A");
@@ -65,8 +66,11 @@ const convertSlug = (str) => {
 const HeaderUser = (props) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [form] = Form.useForm();
   const isAuthenticated = useSelector((state) => state.account.isAuthenticated);
   const user = useSelector((state) => state.account.user);
+  const [isShowModalManageUser, setIsShowModalManageUser] = useState(false);
+  const { searchBook, setSearchBook } = props;
   const {
     token: { colorBgContainer },
   } = theme.useToken();
@@ -89,6 +93,9 @@ const HeaderUser = (props) => {
     }
     if (e.key === "3") {
       navigate("/admin");
+    }
+    if (e.key === "1") {
+      setIsShowModalManageUser(true);
     }
   };
   const items = [
@@ -120,13 +127,6 @@ const HeaderUser = (props) => {
   const menuProps = {
     items,
     onClick: handleMenuClick,
-  };
-  const [open, setOpen] = useState(false);
-  const showDrawer = () => {
-    setOpen(true);
-  };
-  const onClose = () => {
-    setOpen(false);
   };
   const urlAvatar = `${import.meta.env.VITE_BACK_END_URL}/images/avatar/${
     user.avatar
@@ -194,16 +194,18 @@ const HeaderUser = (props) => {
           <FaReact />
           Webdevstudios
         </div>
-        <div className='logo-mobile' onClick={showDrawer}>
-          <FaBars />
-        </div>
         <div className='navbar-search'>
           <Input.Search
             placeholder='What are you looking for today?'
-            // onSearch={}
+            allowClear
+            onSearch={(value) => {
+              const query = `&mainText=/${value}/i`;
+              setSearchBook(query);
+            }}
             enterButton
             className='search-bar'
           />
+
           <div className='menu-item'>
             <Menu theme='dark' items={[]}></Menu>
           </div>
@@ -225,12 +227,16 @@ const HeaderUser = (props) => {
               </div>
             </Popover>
           ) : null}
-
+          <ModalManageAccount
+            open={isShowModalManageUser}
+            setOpen={setIsShowModalManageUser}
+            urlAvatar={urlAvatar}
+          />
           {isAuthenticated === true ? (
             <div className='account'>
               <Dropdown.Button
                 menu={menuProps}
-                size='middle'
+                size='large'
                 placement='bottom'
                 icon={<Avatar shape='circle' src={urlAvatar}></Avatar>}
               >

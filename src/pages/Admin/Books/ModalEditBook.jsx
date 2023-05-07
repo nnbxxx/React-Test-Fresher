@@ -202,7 +202,6 @@ const ModalEditBook = (props) => {
       form.resetFields();
     };
   }, [data]);
-  console.log(data);
   return (
     <>
       <Modal

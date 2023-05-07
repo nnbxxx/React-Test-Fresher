@@ -22,6 +22,7 @@ import "react-image-gallery/styles/scss/image-gallery.scss";
 import "./styles/global.scss";
 import OrderPage from "./pages/Order";
 import HistoryPage from "./pages/History";
+import { ManageOrders } from "./pages/Admin/Orders/ManageOrders";
 const router = createBrowserRouter([
   {
     path: "/",
@@ -42,11 +43,19 @@ const router = createBrowserRouter([
   },
   {
     path: "/order",
-    element: <OrderPage />,
+    element: (
+      <ProtectedRoute>
+        <OrderPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/history",
-    element: <HistoryPage />,
+    element: (
+      <ProtectedRoute>
+        <HistoryPage />
+      </ProtectedRoute>
+    ),
   },
   {
     path: "/admin",
@@ -68,6 +77,10 @@ const router = createBrowserRouter([
       {
         path: "book",
         element: <ManageBook />,
+      },
+      {
+        path: "order",
+        element: <ManageOrders />,
       },
     ],
   },

@@ -66,10 +66,12 @@ const LayoutUser = (props) => {
   useEffect(() => {
     fetchListCategory();
   }, []);
+  const [searchBook, setSearchBook] = useState("");
+
   return (
     <>
       <Layout className='layout'>
-        <HeaderUser />
+        <HeaderUser searchBook={searchBook} setSearchBook={setSearchBook} />
         <Layout>
           <Sider
             width={240}
@@ -102,6 +104,7 @@ const LayoutUser = (props) => {
                 onClick={() => {
                   form.resetFields();
                   setFilter("");
+                  setSearchBook("");
                 }}
                 style={{ cursor: "pointer" }}
               >
@@ -233,7 +236,7 @@ const LayoutUser = (props) => {
               }}
             >
               <div style={{ minHeight: "100vh" }}>
-                <Outlet context={[filter, setFilter]} />
+                <Outlet context={[filter, searchBook]} />
               </div>
             </div>
           </Content>
